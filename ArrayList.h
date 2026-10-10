@@ -34,6 +34,34 @@ public:
         --size_;
     }
 
+    void addAnywhere(int position, T* value) override {
+        if (position < 0 || position > size_) {
+            std::cout << "Invalid position." << std::endl;
+            return;
+        }
+        if (size_ >= CAPACITY) {
+            std::cout << "ArrayList is full." << std::endl;
+            return;
+        }
+        for (int i = size_; i > position; --i) {
+            data_[i] = data_[i - 1];
+        }
+        data_[position] = value;
+        ++size_;
+    }
+
+    void deleteAnywhere(int position) override {
+        if (position < 0 || position >= size_) {
+            std::cout << "Invalid position." << std::endl;
+            return;
+        }
+        delete data_[position];                
+        for (int i = position; i < size_ - 1; ++i) {
+            data_[i] = data_[i + 1];
+        }
+        --size_;
+    }
+
     bool search(T* value) const override {
         for (int i = 0; i < size_; ++i) {
             if (*data_[i] == *value) return true;
