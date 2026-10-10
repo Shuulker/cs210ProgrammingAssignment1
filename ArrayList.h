@@ -55,7 +55,7 @@ public:
             std::cout << "Invalid position." << std::endl;
             return;
         }
-        delete data_[position];                
+        delete data_[position];
         for (int i = position; i < size_ - 1; ++i) {
             data_[i] = data_[i + 1];
         }
@@ -74,6 +74,31 @@ public:
             std::cout << *data_[i] << ",";
         }
         std::cout << std::endl;
+    }
+
+    void concat(List<T>* other) override {
+        ArrayList<T>* source = dynamic_cast<ArrayList<T>*>(other);
+        if (source == nullptr) {
+            std::cout << "Cannot concat lists of different types." << std::endl;
+            return;
+        }
+        if (size_ + source->size_ > CAPACITY) {
+            std::cout << "Not enough capacity to concat." << std::endl;
+            return;
+        }
+        for (int i = 0; i < source->size_; ++i) {
+            data_[size_ + i] = source->data_[i];
+        }
+        size_ += source->size_;
+        source->size_ = 0;
+    }
+
+    void reverse() override {
+        for (int i = 0, j = size_ - 1; i < j; ++i, --j) {
+            T* temp = data_[i];
+            data_[i] = data_[j];
+            data_[j] = temp;
+        }
     }
 
     ~ArrayList() override {

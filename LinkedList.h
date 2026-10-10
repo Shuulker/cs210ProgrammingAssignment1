@@ -90,6 +90,41 @@ public:
         std::cout << std::endl;
     }
 
+    void reverse() override {
+        Node<T>* prev = nullptr;
+        Node<T>* current = head_;
+        while (current != nullptr) {
+            Node<T>* next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        head_ = prev;
+    }
+
+    void concat(List<T>* other) override {
+        LinkedList<T>* source = dynamic_cast<LinkedList<T>*>(other);
+        if (source == nullptr) {
+            std::cout << "Cannot concat lists of different types." << std::endl;
+            return;
+        }
+        if (source->head_ == nullptr) {
+            return;
+        }
+        if (head_ == nullptr) {
+            head_ = source->head_;
+        } else {
+            Node<T>* tail = head_;
+            while (tail->next != nullptr) {
+                tail = tail->next;
+            }
+            tail->next = source->head_;
+        }
+        size_ += source->size_;
+        source->head_ = nullptr;
+        source->size_ = 0;
+    }
+
     ~LinkedList() override {
         while (head_ != nullptr) {
             Node<T>* doomed = head_;
