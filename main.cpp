@@ -29,6 +29,46 @@ int main() {
 
     // ---- Part 2: your Uno scene goes below ----
 
+    std::cout << "\n=== Game Night ===" << std::endl;
 
-    return 0;
+    auto table = makeList<Player>();
+    table->addFront(new Player(4, "Joseph"));
+    table->addFront(new Player(3, "Sebastian"));
+    table->addFront(new Player(2, "Jean"));
+    table->addFront(new Player(1, "William"));
+    std::cout << "Table sits down. Turn order: ";
+    table->print();
+
+    std::cout << "\nEli pulls up a chair between Sebastian and Jean." << std::endl;
+    table->addAnywhere(2, new Player(5, "Gabriel"));
+    std::cout << "Turn order: ";
+    table->print();
+
+    std::cout << "\nJoseph plays a Reverse card!" << std::endl;
+    std::cout << "Before: ";
+    table->print();
+    table->reverse();
+    std::cout << "After:  ";
+    table->print();
+
+    std::cout << "\nGabriel plays his last card and leaves the table." << std::endl;
+    table->deleteAnywhere(2);
+    std::cout << "Turn order: ";
+    table->print();
+
+    auto second = makeList<Player>();
+    second->addFront(new Player(8, "Isa"));
+    second->addFront(new Player(7, "Jayden"));
+    second->addFront(new Player(6, "Finn"));
+
+    std::cout << "\nA second table wanders over and joins in." << std::endl;
+    std::cout << "Before merge, first table:  ";
+    table->print();
+    std::cout << "Before merge, second table: ";
+    second->print();
+    table->concat(second.get());
+    std::cout << "After merge, first table:   ";
+    table->print();
+    std::cout << "After merge, second table:  (empty)";
+    second->print();
 }
