@@ -10,4 +10,5 @@ add_executable(CS210ProgrammingAssignment1 main.cpp
         ArrayList.h
         LinkedList.h
         Node.h
-        Player.h)
+        Player.h
+        Card.h)
